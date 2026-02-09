@@ -8,6 +8,12 @@
         Create new
     </a>
 </p>
+<p>
+    <a asp-controller="Doctores"
+    asp-action="DoctoresEspecialidad">
+        Buscador doctores
+    </a>
+</p>
 
 <table class="table table-warning">
     <thead>
@@ -17,6 +23,7 @@
             <th>Especialidad</th>
             <th>Salario</th>
             <th>Hospital</th>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +35,20 @@
                 <td>@doc.Especialidad</td>
                 <td>@doc.Salario</td>
                 <td>@doc.IdHospital</td>
+                <td>
+                    <a asp-controller="Doctores"
+                    asp-action="Delete"
+                    asp-route-iddoctor="@doc.IdDoctor"
+                    class="btn btn-danger">
+                        Delete
+                    </a>
+                    <a asp-controller="Doctores"
+                       asp-action="Edit"
+                       asp-route-iddoctor="@doc.IdDoctor"
+                       class="btn btn-info">
+                        Edit
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

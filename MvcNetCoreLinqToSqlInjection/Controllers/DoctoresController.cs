@@ -7,10 +7,11 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
     public class DoctoresController : Controller
     {
         //private RepositoryDoctoresSQLServer repo;
-        private RepositoryDoctoresOracle repo;
+        //private RepositoryDoctoresOracle repo;
+        IRepositoryDoctores repo;
         //RECIBIMOS NUESTRO REPOSITORY
         public DoctoresController
-            (RepositoryDoctoresOracle repo)
+            (IRepositoryDoctores repo)
         {
             this.repo = repo;
         }
@@ -34,6 +35,41 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
                 (doc.IdDoctor, doc.Apellido, doc.Especialidad
                 , doc.Salario, doc.IdHospital);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int iddoctor)
+        {
+            await this.repo.DeleteDoctorAsync(iddoctor);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int iddoctor)
+        {
+            Doctor doc = this.repo.FindDoctor(iddoctor);
+            return View(doc);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Doctor doctor)
+        {
+            await this.repo.UpdateDoctorAsync
+                (doctor.IdDoctor, doctor.Apellido, doctor.Especialidad
+                , doctor.Salario, doctor.IdHospital);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DoctoresEspecialidad()
+        {
+            List<Doctor> doctores = this.repo.GetDoctores();
+            return View(doctores);
+        }
+
+        [HttpPost]
+        public IActionResult DoctoresEspecialidad(string especialidad)
+        {
+            List<Doctor> doctores =
+                this.repo.GetDoctoresEspecialidad(especialidad);
+            return View(doctores);
         }
     }
 }

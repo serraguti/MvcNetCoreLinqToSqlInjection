@@ -1,0 +1,32 @@
+﻿@model List<Doctor>
+
+<h1>Doctores especialidad</h1>
+
+<form method="post">
+    <label>Introduzca especialidad</label>
+    <input type="text" name="especialidad"
+        class="form-control"/>
+    <button class="btn btn-warning">
+        Buscar doctores
+    </button>
+</form>
+
+<table class="table table-info">
+    <thead>
+        <tr>
+            <th>Apellido</th>
+            <th>Especialidad</th>
+            <th>Salario</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Doctor doc in Model)
+        {
+            <tr>
+                <td>@doc.Apellido</td>
+                <td>@doc.Especialidad</td>
+                <td>@doc.Salario</td>
+            </tr>
+        }
+    </tbody>
+</table>
